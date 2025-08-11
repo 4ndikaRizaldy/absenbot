@@ -44,6 +44,24 @@
       "latitude": -8.591767,
       "longitude": 116.2484509,
       "distance": 7
+    },
+    {
+      "method": "location",
+      "who": "145024016773225@lid",
+      "name": "Aldy",
+      "time": "11/8/2025, 23.42.34",
+      "latitude": -8.591798,
+      "longitude": 116.2484205,
+      "distance": 6
+    },
+    {
+      "method": "location",
+      "who": "1228947869762@lid",
+      "name": "SMARTBOT🤖",
+      "time": "11/8/2025, 23.43.24",
+      "latitude": -8.5917957,
+      "longitude": 116.2484208,
+      "distance": 6
     }
   ]
 }
