@@ -1,0 +1,49 @@
+{
+  "2025-08-11": [
+    {
+      "method": "location",
+      "who": "6287763016516@s.whatsapp.net",
+      "name": "Andika Rizaldy",
+      "time": "11/8/2025, 23.29.16",
+      "latitude": -8.5917969,
+      "longitude": 116.2484228,
+      "distance": 6
+    },
+    {
+      "method": "location",
+      "who": "120363147180274244@g.us",
+      "name": "120363147180274244@g.us",
+      "time": "11/8/2025, 23.29.49",
+      "latitude": -8.5917992,
+      "longitude": 116.24842,
+      "distance": 6
+    },
+    {
+      "method": "location",
+      "who": "114503995932876@lid",
+      "name": "Andika Rizaldy",
+      "time": "11/8/2025, 23.29.50",
+      "latitude": -8.5917992,
+      "longitude": 116.24842,
+      "distance": 6
+    },
+    {
+      "method": "location",
+      "who": "114503995932876@lid",
+      "name": "Andika Rizaldy",
+      "time": "11/8/2025, 23.30.20",
+      "latitude": -8.59158814,
+      "longitude": 116.24838913,
+      "distance": 19
+    },
+    {
+      "method": "location",
+      "who": "145024016773225@lid",
+      "name": "Aldy",
+      "time": "11/8/2025, 23.31.12",
+      "latitude": -8.591767,
+      "longitude": 116.2484509,
+      "distance": 7
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Absensi Lokasi</title>
+</head>
+<body>
+    <h2>Absensi Berbasis Lokasi</h2>
+    <button onclick="ambilLokasi()">Absen Sekarang</button>
+
+    <script>
+        // Lokasi sekolah/kantor
+        const latSekolah = -8.591758; // Ganti koordinat
+        const lonSekolah = 116.248384;
+        const radiusMaks = 100; // meter
+
+        function ambilLokasi() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    const lat = pos.coords.latitude;
+                    const lon = pos.coords.longitude;
+                    const jarak = hitungJarak(lat, lon, latSekolah, lonSekolah);
+                    
+                    if (jarak <= radiusMaks) {
+                        alert("✅ Absen berhasil! Anda berada di lokasi yang benar.");
+                        // Kirim data ke server untuk disimpan
+                        // fetch('/absen', {method: 'POST', body: JSON.stringify({lat, lon})})
+                    } else {
+                        alert("❌ Anda berada di luar area absensi!");
+                    }
+                }, function(err) {
+                    alert("Gagal mendapatkan lokasi: " + err.message);
+                });
+            } else {
+                alert("Browser Anda tidak mendukung GPS.");
+            }
+        }
+
+        function hitungJarak(lat1, lon1, lat2, lon2) {
+            const R = 6371000; // radius bumi dalam meter
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+    </script>
+</body>
+</html>
