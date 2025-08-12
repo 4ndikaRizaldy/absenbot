@@ -304,24 +304,59 @@ app.get("/today", (req, res) => {
 
 app.get("/all", (req, res) => {
   const data = loadData();
-  let html = '<h2>Semua Rekap</h2><a href="/">Kembali</a>';
-  for (const day of Object.keys(data).sort().reverse()) {
-    html += `<h3>${day}</h3><table border="1" cellpadding="6"><tr><th>No</th><th>Nama</th><th>Waktu</th><th>Metode</th><th>Lat</th><th>Lon</th><th>Jarak</th></tr>`;
-    html += data[day]
-      .map(
-        (x, i) => `<tr>
-      <td>${i + 1}</td><td>${x.name}</td><td>${x.time}</td><td>${
-          x.method
-        }</td><td>${x.latitude ?? ""}</td><td>${x.longitude ?? ""}</td><td>${
-          x.distance ?? ""
-        }</td>
-    </tr>`
-      )
-      .join("");
-    html += `</table>`;
-  }
-  res.send(html);
+  const sortedDays = Object.keys(data).sort().reverse();
+
+  res.send(`
+    <html>
+    <head>
+      <title>Rekap Absensi</title>
+      <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f8; color: #333; padding: 20px; }
+        h2 { color: #2c3e50; }
+        h3 { margin-top: 30px; color: #34495e; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        table { border-collapse: collapse; width: 100%; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        th, td { padding: 10px 15px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background: #3498db; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+      </style>
+    </head>
+    <body>
+      <h2>📜 Semua Rekap Absensi</h2>
+      <p><a href="/">⬅ Kembali</a></p>
+      ${
+        sortedDays.length
+          ? sortedDays
+              .map(day => `
+                <h3>📅 ${day}</h3>
+                <table>
+                  <tr>
+                    <th>No</th><th>Nama</th><th>Waktu</th><th>Metode</th><th>Lat</th><th>Lon</th><th>Jarak</th>
+                  </tr>
+                  ${data[day]
+                    .map(
+                      (x, i) => `<tr>
+                        <td>${i + 1}</td>
+                        <td>${x.name}</td>
+                        <td>${x.time}</td>
+                        <td>${x.method}</td>
+                        <td>${x.latitude ?? ""}</td>
+                        <td>${x.longitude ?? ""}</td>
+                        <td>${x.distance ? `${x.distance} m` : ""}</td>
+                      </tr>`
+                    )
+                    .join("")}
+                </table>
+              `)
+              .join("")
+          : "<p>Belum ada data absensi.</p>"
+      }
+    </body>
+    </html>
+  `);
 });
+
 
 app.post("/api/absen", (req, res) => {
   const { name, latitude, longitude } = req.body;
