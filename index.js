@@ -13,9 +13,9 @@ const http = require('http')
 const AUTH_FOLDER = './auth_info'
 const DATA_FILE = 'absensi.json'
 const PORT = 3000
-const ABSEN_LAT = -8.591758
-const ABSEN_LON = 116.248384
-const MAX_RADIUS = 100 // meter
+const ABSEN_LAT = -8.6366576
+const ABSEN_LON = 116.1480758
+const MAX_RADIUS = 1000 // meter
 const ADMIN_NUMBER = '6287763016516' // nomor admin, tanpa tanda +, tapi dengan kode negara
 // --------------------------------------------
 
