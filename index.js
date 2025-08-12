@@ -227,10 +227,29 @@ app.use(express.json());
 app.get("/", (req, res) => {
   const ip = getLocalIP();
   res.send(`
-    <h2>Absensi Bot — Realtime</h2>
-    <p>Bot WhatsApp & Web berjalan.</p>
-    <p>Lihat data: <a href="/today">Hari Ini</a> | <a href="/all">Semua</a></p>
-    <p>Alamat LAN: http://${ip}:${PORT}</p>
+    <html>
+    <head>
+      <title>Absensi Bot — Realtime</title>
+      <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f8; color: #333; padding: 20px; }
+        h2 { color: #2c3e50; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .links { margin-top: 10px; }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <h2>Absensi Bot — Realtime</h2>
+        <p>✅ Bot WhatsApp & Web berjalan.</p>
+        <div class="links">
+          <p>Lihat data: <a href="/today">📅 Hari Ini</a> | <a href="/all">📜 Semua</a></p>
+          <p>Alamat LAN: <strong>http://${ip}:${PORT}</strong></p>
+        </div>
+      </div>
+    </body>
+    </html>
   `);
 });
 
@@ -239,22 +258,47 @@ app.get("/today", (req, res) => {
   const today = new Date().toISOString().slice(0, 10);
   const list = data[today] || [];
   res.send(`
-    <h2>Daftar Hadir — ${today}</h2>
-    <a href="/">Kembali</a>
-    <table border="1" cellpadding="6">
-      <tr><th>No</th><th>Nama</th><th>Waktu</th><th>Metode</th><th>Lat</th><th>Lon</th><th>Jarak</th></tr>
-      ${list
-        .map(
-          (x, i) => `<tr>
-        <td>${i + 1}</td><td>${x.name}</td><td>${x.time}</td><td>${
-            x.method
-          }</td><td>${x.latitude ?? ""}</td><td>${x.longitude ?? ""}</td><td>${
-            x.distance ?? ""
-          }</td>
-      </tr>`
-        )
-        .join("")}
-    </table>
+    <html>
+    <head>
+      <title>Daftar Hadir ${today}</title>
+      <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f8; color: #333; padding: 20px; }
+        h2 { color: #2c3e50; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        table { border-collapse: collapse; width: 100%; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        th, td { padding: 10px 15px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background: #3498db; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+      </style>
+    </head>
+    <body>
+      <h2>📅 Daftar Hadir — ${today}</h2>
+      <p><a href="/">⬅ Kembali</a></p>
+      ${
+        list.length
+          ? `<table>
+              <tr>
+                <th>No</th><th>Nama</th><th>Waktu</th><th>Metode</th><th>Lat</th><th>Lon</th><th>Jarak</th>
+              </tr>
+              ${list
+                .map(
+                  (x, i) => `<tr>
+                    <td>${i + 1}</td>
+                    <td>${x.name}</td>
+                    <td>${x.time}</td>
+                    <td>${x.method}</td>
+                    <td>${x.latitude ?? ""}</td>
+                    <td>${x.longitude ?? ""}</td>
+                    <td>${x.distance ? `${x.distance} m` : ""}</td>
+                  </tr>`
+                )
+                .join("")}
+            </table>`
+          : "<p>Belum ada yang absen hari ini.</p>"
+      }
+    </body>
+    </html>
   `);
 });
 
